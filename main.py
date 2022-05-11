@@ -67,7 +67,7 @@ def save_stream(link, user, password):
         in_file = ffmpeg.input(streamlink)
         # ffmpeg.run(in_file)
         # print(in_file)
-        stream = ffmpeg.output(in_file, f'tmp/stream_{n}.mp4',map="0:1",codec="copy").global_args("-codec copy").global_args("-y")
+        stream = ffmpeg.output(in_file, f'tmp/stream_{n}.mp4',map="0:1",codec="copy").global_args("-y")
         ffmpeg.run(stream)
         n+=1
     audio = ffmpeg.input('tmp/audio_stream.aac')
