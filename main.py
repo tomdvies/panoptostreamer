@@ -10,7 +10,7 @@ import shutil
 
 try:
     shutil.rmtree("./tmp")
-except FileExistsError as e:
+except:
     pass
 os.mkdir("./tmp") # make sure you don't use this directory :)))
 
