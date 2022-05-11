@@ -80,7 +80,9 @@ def save_stream(link, user, password):
     # )
 
 with open("info.txt","r") as f:
-    user,pwd = (f.read()).split("\n")
+    file2 = f.read()
+    print(file2)
+    user,pwd = file2.split("\n")[0:2]
 link_arr = ["https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=65b557be-f61b-40eb-8136-ae2900bb8d68"]
 for x in link_arr:
     save_stream(x,user,pwd)
