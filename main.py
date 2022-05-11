@@ -1,5 +1,5 @@
 import os
-
+import auth
 import requests
 from http.cookiejar import MozillaCookieJar
 from pathlib import Path
@@ -24,7 +24,7 @@ def parseCookieFile(cookiefile): # horrible fn dont use
                 cookies[lineFields[5]] = lineFields[6]
     return cookies
 
-def getInfoJson(id, cookies):
+def getInfoJson(id, session):
     content = {
         "deliveryId": id,
         "invocationId": "",
@@ -36,7 +36,7 @@ def getInfoJson(id, cookies):
         "isEmbed": "false",
         "responseType": "json"
     }
-    return requests.post("https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer/DeliveryInfo.aspx", cookies=cookies,
+    return session.post("https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer/DeliveryInfo.aspx",
                   data=content).json()
 
 # def compositvideo(outname):
@@ -46,10 +46,10 @@ def getInfoJson(id, cookies):
 
 
 
-def save_stream(link):
+def save_stream(link, user, password):
     page_id = link.split("id=")[-1]
-    cookies = parseCookieFile('./cookies.txt')
-    infojson = getInfoJson(page_id, cookies)
+    session = auth.getRavenToken(user,password)
+    infojson = getInfoJson(page_id, session)
     # print(infojson)
     name = infojson["Delivery"]["SessionGroupLongName"].replace(" ", "_")
     mu3links = []
@@ -79,9 +79,9 @@ def save_stream(link):
     #         .run()
     # )
 
-
-
+with open("info.txt","r") as f:
+    user,pwd = (f.read()).split("\n")
 link_arr = ["https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=65b557be-f61b-40eb-8136-ae2900bb8d68"]
 for x in link_arr:
-    save_stream(x)
+    save_stream(x,user,pwd)
 
