@@ -61,13 +61,13 @@ def save_stream(link, user, password):
     # ffmpeg.run(in_file)
     # print(in_file)
     # TODO: parallelize this
-    audiostream = ffmpeg.output(in_file, f'tmp/audio_stream.mp3', map="0:2").global_args("-codec copy").global_args("-y")
+    audiostream = ffmpeg.output(in_file, f'tmp/audio_stream.aac', map="0:2",codec="copy").global_args("-y")
     ffmpeg.run(audiostream)
     for streamlink in mu3links[1::]:
         in_file = ffmpeg.input(streamlink)
         # ffmpeg.run(in_file)
         # print(in_file)
-        stream = ffmpeg.output(in_file, f'tmp/stream_{n}.mp4',map="0:1").global_args("-codec copy").global_args("-y")
+        stream = ffmpeg.output(in_file, f'tmp/stream_{n}.mp4',map="0:1",codec="copy").global_args("-codec copy").global_args("-y")
         ffmpeg.run(stream)
         n+=1
     audio = ffmpeg.input('tmp/audio_stream.aac')
@@ -81,7 +81,6 @@ def save_stream(link, user, password):
 
 with open("info.txt","r") as f:
     file2 = f.read()
-    print(file2)
     user,pwd = file2.split("\n")[0:2]
 link_arr = ["https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=65b557be-f61b-40eb-8136-ae2900bb8d68"]
 for x in link_arr:
