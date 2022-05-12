@@ -67,7 +67,7 @@ def save_stream2(link, user, password):
         final_clip = clips_array([[videos[0],videos[1]]])
         final_clip.write_videofile(f"{name}.mp4")
     else:
-        final_clip = clips_array([[videos[0]],
+        final_clip = clips_array([[videos[0],videos[0]],
                                   [videos[1], videos[2]]])
         final_clip.write_videofile(f"{name}.mp4")
 
