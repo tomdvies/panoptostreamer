@@ -61,7 +61,7 @@ def save_stream(link, user, password):
     # ffmpeg.run(in_file)
     # print(in_file)
     # TODO: parallelize this
-    audiostream = ffmpeg.output(in_file, f'tmp/stream_0.mp4', map="0:1",codec="copy").global_args("-y")
+    audiostream = ffmpeg.output(in_file, f'tmp/stream_0.mp4',codec="copy").global_args("-y")
     ffmpeg.run(audiostream)
     for streamlink in mu3links[1::]:
         in_file = ffmpeg.input(streamlink)
