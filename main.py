@@ -54,7 +54,9 @@ def save_stream2(link, user, password):
     mu3links = []
     for streams in infojson["Delivery"]["Streams"]:
         mu3links += [streams["StreamUrl"]]  # first one is person lecturing, second lhs and third rhs
+    print(f"{len(mu3links)} files to download,")
     for i in range(len(mu3links)):
+        print(f"downloading file {i+1}...")
         m3u8fetch.download_m3u8(mu3links[i],f"tmp/out{i}.mp4")
 
 # def save_stream(link, user, password):
