@@ -1,4 +1,7 @@
 import os
+
+from moviepy.video.VideoClip import ColorClip
+
 import auth
 import requests
 from http.cookiejar import MozillaCookieJar
@@ -67,7 +70,8 @@ def save_stream2(link, user, password):
         final_clip = clips_array([[videos[0],videos[1]]]).resize((1980,1080))
         final_clip.write_videofile(f"{name}.mp4",threads = 8, fps=24)
     else:
-        final_clip = clips_array([[videos[0]],
+        blank = ColorClip((10,10), (0,0,0), duration=videos[0].duration)
+        final_clip = clips_array([[videos[0],blank],
                                   [videos[1], videos[2]]]).resize((1980,1080))
         final_clip.write_videofile(f"{name}.mp4",threads = 8, fps=24)
 
