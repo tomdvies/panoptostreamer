@@ -67,8 +67,8 @@ def save_stream2(link, user, password):
         final_clip = clips_array([[videos[0],videos[1]]]).resize((1980,1080))
         final_clip.write_videofile(f"{name}.mp4",threads = 8, fps=24)
     else:
-        final_clip = clips_array([[videos[0],videos[0]],
-                                  [videos[1], videos[2]]])
+        final_clip = clips_array([[videos[0]],
+                                  [videos[1], videos[2]]]).resize((1980,1080))
         final_clip.write_videofile(f"{name}.mp4",threads = 8, fps=24)
 
 
