@@ -62,14 +62,14 @@ def save_stream2(link, user, password):
     videos = [VideoFileClip(f"tmp/out{i}.mp4") for i in range(len(mu3links))]
     clip_arrs = []
     if len(videos) == 1:
-        videos[0].write_videofile(f"{name}.mp4")
+        videos[0].write_videofile(f"{name}.mp4",threads = 8, fps=24)
     if len(videos) == 2:
         final_clip = clips_array([[videos[0],videos[1]]])
-        final_clip.write_videofile(f"{name}.mp4")
+        final_clip.write_videofile(f"{name}.mp4",threads = 8, fps=24)
     else:
         final_clip = clips_array([[videos[0],videos[0]],
                                   [videos[1], videos[2]]])
-        final_clip.write_videofile(f"{name}.mp4")
+        final_clip.write_videofile(f"{name}.mp4",threads = 8, fps=24)
 
 
 # def save_stream(link, user, password):
