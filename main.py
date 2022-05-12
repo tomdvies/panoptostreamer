@@ -6,6 +6,7 @@ from pathlib import Path
 import re
 import ffmpeg
 import shutil
+import m3u8fetch
 
 
 try:
@@ -44,9 +45,7 @@ def getInfoJson(id, session):
 #     videos = [ffmpeg.input(file) for file in os.listdir("tmp") if file != "audio_stream.mp3"]
 #     if len(videos) == 1:
 
-
-
-def save_stream(link, user, password):
+def save_stream2(link, user, password):
     page_id = link.split("id=")[-1]
     session = auth.getRavenToken(user,password)
     infojson = getInfoJson(page_id, session)
@@ -55,34 +54,61 @@ def save_stream(link, user, password):
     mu3links = []
     for streams in infojson["Delivery"]["Streams"]:
         mu3links += [streams["StreamUrl"]]  # first one is person lecturing, second lhs and third rhs
-    # print(mu3links)
-    n = 1
-    in_file = ffmpeg.input(mu3links[0])
-    # ffmpeg.run(in_file)
-    # print(in_file)
-    # TODO: parallelize this
-    audiostream = ffmpeg.output(in_file, f'tmp/stream_0.mp4',codec="copy").global_args("-y")
-    ffmpeg.run(audiostream)
-    for streamlink in mu3links[1::]:
-        in_file = ffmpeg.input(streamlink)
-        # ffmpeg.run(in_file)
-        # print(in_file)
-        stream = ffmpeg.output(in_file, f'tmp/stream_{n}.mp4',map="0:1",codec="copy").global_args("-y")
-        ffmpeg.run(stream)
-        n+=1
-    audio = ffmpeg.input('tmp/audio_stream.aac')
-    videos = [ffmpeg.input(file) for file in os.listdir("tmp") if file != "audio_stream.mp3"]
-    # (
-    #     ffmpeg
-    #         .filter([main, logo], 'overlay', 10, 10)
-    #         .output('out.mp4')
-    #         .run()
-    # )
+    for i in range(len(mu3links)):
+        m3u8fetch.download_m3u8(mu3links[i],f"tmp/out{i}.mp4")
+
+# def save_stream(link, user, password):
+#     page_id = link.split("id=")[-1]
+#     session = auth.getRavenToken(user,password)
+#     infojson = getInfoJson(page_id, session)
+#     # print(infojson)
+#     name = infojson["Delivery"]["SessionGroupLongName"].replace(" ", "_")
+#     mu3links = []
+#     for streams in infojson["Delivery"]["Streams"]:
+#         mu3links += [streams["StreamUrl"]]  # first one is person lecturing, second lhs and third rhs
+#     # print(mu3links)
+#     n = 0
+#     print(mu3links)
+#     in_file = ffmpeg.input(mu3links[0])
+#     # ffmpeg.run(in_file)
+#     # print(in_file)
+#     # TODO: parallelize this
+#     audiostream = ffmpeg.output(in_file, f'tmp/stream_0.mp4',codec="copy").global_args("-y")
+#     ffmpeg.run(audiostream)
+#     for streamlink in mu3links[1::]:
+#         in_file = ffmpeg.input(streamlink)
+#         # ffmpeg.run(in_file)
+#         # print(in_file)
+#         # stream = ffmpeg.output(in_file, f'tmp/stream_{n}.mp4',codec="copy").global_args("-y")
+#         # ffmpeg.run(stream)
+#         n+=1
+#     videos = [ffmpeg.input(file) for file in os.listdir("tmp")]
+#     """ffmpeg
+# 	-i 1.avi -i 2.avi -i 3.avi -i 4.avi
+# 	-filter_complex "
+# 		nullsrc=size=640x480 [base];
+# 		[0:v] setpts=PTS-STARTPTS, scale=320x240 [upperleft];
+# 		[1:v] setpts=PTS-STARTPTS, scale=320x240 [upperright];
+# 		[2:v] setpts=PTS-STARTPTS, scale=320x240 [lowerleft];
+# 		[3:v] setpts=PTS-STARTPTS, scale=320x240 [lowerright];
+# 		[base][upperleft] overlay=shortest=1 [tmp1];
+# 		[tmp1][upperright] overlay=shortest=1:x=320 [tmp2];
+# 		[tmp2][lowerleft] overlay=shortest=1:y=240 [tmp3];
+# 		[tmp3][lowerright] overlay=shortest=1:x=320:y=240
+# 	"
+# 	-c:v libx264 output.mkv"""
+#     ffmpeg.filter(videos, "nullsrc")
+#     # (
+#     #     ffmpeg
+#     #         .filter([main, logo], 'overlay', 10, 10)
+#     #         .output('out.mp4')
+#     #         .run()
+#     # )
 
 with open("info.txt","r") as f:
     file2 = f.read()
     user,pwd = file2.split("\n")[0:2]
 link_arr = ["https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=65b557be-f61b-40eb-8136-ae2900bb8d68"]
 for x in link_arr:
-    save_stream(x,user,pwd)
+    save_stream2(x,user,pwd)
 
