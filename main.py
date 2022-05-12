@@ -59,7 +59,7 @@ def save_stream2(link, user, password):
     for i in range(len(mu3links)):
         print(f"downloading file {i+1}...")
         m3u8fetch.download_m3u8(mu3links[i],f"tmp/out{i}.mp4")
-    videos = [VideoFileClip("tmp/"+file).margin(5) for file in os.listdir("tmp")]
+    videos = [VideoFileClip(f"tmp/out{i}.mp4") for i in range(len(mu3links))]
     clip_arrs = []
     if len(videos) == 1:
         videos[0].write_videofile(f"{name}.mp4")
