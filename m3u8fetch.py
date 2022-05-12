@@ -11,6 +11,6 @@ playlistroot = m3u8.load(uri=url, headers=headers)
 urls = [play.absolute_uri for play in playlistroot.playlists]
 playlist = m3u8.load(urls[0]+"?InvocationID=6a7de538-23d2-ec11-82a6-023c18b7dbd3&tid=00000000-0000-0000-0000-000000000000&StreamID=966dca8b-0532-4520-af68-ae5a00b6a69f&ServerName=cambridgelectures.cloud.panopto.eu")
 
-with open("result.mp4","w") as f:
+with open("result.mp4","wb") as f:
     r = requests.get(playlist.segments[0].absolute_uri)
     f.write(r.content)
