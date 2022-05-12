@@ -56,12 +56,12 @@ def save_stream(link, user, password):
     for streams in infojson["Delivery"]["Streams"]:
         mu3links += [streams["StreamUrl"]]  # first one is person lecturing, second lhs and third rhs
     # print(mu3links)
-    n = 0
+    n = 1
     in_file = ffmpeg.input(mu3links[0])
     # ffmpeg.run(in_file)
     # print(in_file)
     # TODO: parallelize this
-    audiostream = ffmpeg.output(in_file, f'tmp/stream_1.mp4', map="0:1",codec="copy").global_args("-y")
+    audiostream = ffmpeg.output(in_file, f'tmp/stream_0.mp4', map="0:1",codec="copy").global_args("-y")
     ffmpeg.run(audiostream)
     for streamlink in mu3links[1::]:
         in_file = ffmpeg.input(streamlink)
