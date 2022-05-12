@@ -7,6 +7,7 @@ import re
 import ffmpeg
 import shutil
 import m3u8fetch
+from moviepy.editor import VideoFileClip, clips_array, vfx
 
 
 try:
@@ -58,6 +59,18 @@ def save_stream2(link, user, password):
     for i in range(len(mu3links)):
         print(f"downloading file {i+1}...")
         m3u8fetch.download_m3u8(mu3links[i],f"tmp/out{i}.mp4")
+    videos = [VideoFileClip("tmp/"+file).margin(5) for file in os.listdir("tmp")]
+    clip_arrs = []
+    if len(videos) == 1:
+        videos[0].write_videofile(f"{name}.mp4")
+    if len(videos) == 2:
+        final_clip = clips_array([[videos[0],videos[1]]])
+        final_clip.write_videofile(f"{name}.mp4")
+    else:
+        final_clip = clips_array([[videos[0]],
+                                  [videos[1], videos[2]]])
+        final_clip.write_videofile(f"{name}.mp4")
+
 
 # def save_stream(link, user, password):
 #     page_id = link.split("id=")[-1]
