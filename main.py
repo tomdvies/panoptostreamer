@@ -56,6 +56,7 @@ def save_stream2(link, user, password,name):
     page_id = link.split("id=")[-1]
     session = auth.getRavenToken(user,password)
     infojson = getInfoJson(page_id, session)
+    out_str = f"output/{name}.mp4"
     # print(infojson)
     # name = infojson["Delivery"]["SessionGroupLongName"].replace(" ", "_")
     mu3links = []
@@ -68,15 +69,15 @@ def save_stream2(link, user, password,name):
     videos = [VideoFileClip(f"tmp/out{i}.mp4") for i in range(len(mu3links))]
     clip_arrs = []
     if len(videos) == 1:
-        shutil.copy2('tmp/out0.mp4', f'output/{name}.mp4')
+        shutil.copy2('tmp/out0.mp4', out_str)
     if len(videos) == 2:
         final_clip = clips_array([[videos[0],videos[1]]]).resize((1980,1080))
-        final_clip.write_videofile(f"{name}.mp4",threads = 8, fps=24)
+        final_clip.write_videofile(out_str, threads = 8, fps=24)
     else:
         blank = ColorClip((10,10), (0,0,0), duration=videos[0].duration)
         final_clip = clips_array([[videos[0].resize(0.6),blank],
                                   [videos[1], videos[2]]])
-        final_clip.write_videofile(f"{name}.mp4",threads = 32, fps=24)
+        final_clip.write_videofile(out_str, threads = 32, fps=24)
     print("written file,",f'output/{name}.mp4')
 
 
