@@ -77,6 +77,7 @@ def save_stream2(link, user, password):
         final_clip = clips_array([[videos[0].resize(0.6),blank],
                                   [videos[1], videos[2]]])
         final_clip.write_videofile(f"{name}.mp4",threads = 32, fps=24)
+    print("written file,",f'output/{name}.mp4')
 
 
 with open("info.txt","r") as f:
