@@ -79,7 +79,7 @@ def save_stream2(link, user, password,name):
         blank = ColorClip((10,10), (0,0,0), duration=videos[0].duration)
         final_clip = clips_array([[videos[0].resize(0.6),blank],
                                   # [videos[1], videos[2].resize(videos[1].size)]])
-                                  [videos[1], crop(videos[2],x1=30,x2=videos[2].size[0]-30,y1=30,y2=videos[2].size[1]-30)]]).subclip(0, 15)
+                                  [videos[1], crop(videos[2],x1=50,x2=videos[2].size[0]-50,y1=70,y2=videos[2].size[1]-70)]]).subclip(0, 15)
         final_clip.write_videofile(out_str, threads = 32, fps=24)
     print("written file,",f'output/{name}.mp4')
 
