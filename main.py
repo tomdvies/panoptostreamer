@@ -8844,5 +8844,5 @@ for x in data["d"]["Results"]:
     link_arr.append(x["ViewerUrl"])
 # link_arr = ["https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=65b557be-f61b-40eb-8136-ae2900bb8d68"]
 for x in range(len(link_arr)):
-    save_stream2(link_arr[x],user,pwd, f"GRM_Lecture_{x+1}")
+    save_stream2(link_arr[x],user,pwd, f"GRM_Lecture_{len(link_arr) - x}")
 
