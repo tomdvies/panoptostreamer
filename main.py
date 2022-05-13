@@ -8838,9 +8838,9 @@ data = {
 		"Subfolders": []
 	}
 }
-print(data["Results"][0]["ViewerUrl"])
+# print(data["Results"][0]["ViewerUrl"])
 link_arr=[]
-for x in data["Results"]:
+for x in data["d"]["Results"]:
     link_arr.append(x["ViewerUrl"])
 # link_arr = ["https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=65b557be-f61b-40eb-8136-ae2900bb8d68"]
 for x in range(len(link_arr)):
