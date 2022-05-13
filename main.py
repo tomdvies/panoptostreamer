@@ -52,12 +52,12 @@ def getInfoJson(id, session):
 #     videos = [ffmpeg.input(file) for file in os.listdir("tmp") if file != "audio_stream.mp3"]
 #     if len(videos) == 1:
 
-def save_stream2(link, user, password):
+def save_stream2(link, user, password,name):
     page_id = link.split("id=")[-1]
     session = auth.getRavenToken(user,password)
     infojson = getInfoJson(page_id, session)
     # print(infojson)
-    name = infojson["Delivery"]["SessionGroupLongName"].replace(" ", "_")
+    # name = infojson["Delivery"]["SessionGroupLongName"].replace(" ", "_")
     mu3links = []
     for streams in infojson["Delivery"]["Streams"]:
         mu3links += [streams["StreamUrl"]]  # first one is person lecturing, second lhs and third rhs
@@ -9197,6 +9197,6 @@ link_arr=[]
 for x in data["Results"]:
     link_arr.append(data["Results"][0]["ViewerUrl"])
 # link_arr = ["https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=65b557be-f61b-40eb-8136-ae2900bb8d68"]
-for x in link_arr:
-    save_stream2(x,user,pwd)
+for x in range(len(link_arr)):
+    save_stream2(link_arr[x],user,pwd, f"GRM_Lecture_{x+1}")
 
