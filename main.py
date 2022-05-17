@@ -8856,5 +8856,5 @@ link_arr = ["https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.asp
 			"https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=85936b1f-3180-43b0-bfa6-ae97007fb69d",
 			"https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=1a172d91-161a-4cf2-aefb-ae97008079fd"]
 for x in range(len(link_arr)):
-    save_stream2(link_arr[x],user,pwd, f"Markov_Lecture_{x+1}")
+    save_stream2(link_arr[x],user,pwd, f"VP_Lecture_{x+1}")
 
