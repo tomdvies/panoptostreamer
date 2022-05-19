@@ -2,7 +2,7 @@ import requests
 from datetime import datetime
 import time
 
-# TODO generate panopto from raven
+# This code is awful, but does generate the desired tokens.
 
 def getRavenToken(user, passwd):
     print("Fetching panopto tokens...")
@@ -15,7 +15,7 @@ def getRavenToken(user, passwd):
     session.cookies.set("Ucam-WebAuth-Session-S", "Not-authenticated", domain="www.vle.cam.ac.uk/")
     date = datetime.today().strftime('%Y%m%d%T%H%M%SZ')
     content={
-        "date":date,#"20220505T153159Z",
+        "date":date,
         "iact":"yes",
         "msg":"your session on the site has expired",
         "pwd":passwd,
@@ -25,17 +25,13 @@ def getRavenToken(user, passwd):
         "userid":user,
         "ver":"3"
     }
-    # # QWRV5CSCWF
     re2 = session.post("https://raven.cam.ac.uk/auth/authenticate2.html",data=content,cookies={"Ucam-WebAuth-Session-S":"Not-authenticated"})
-    "Ucam-WebAuth-Session-S"
+    # This step below seems like it should do nothing but removing it breaks everything
     session.cookies.update(re2.history[1].cookies)
-    # print(session.cookies)
     re3 = session.get("https://www.vle.cam.ac.uk/auth/raven/login.php")
     for cookie in session.cookies:
         if cookie.name==".ASPXAUTH":
             print("ASPX:",cookie.value)
         if cookie.name=="csrfToken":
             print("csrf:",cookie.value)
-    # print(session.cookies)
     return session
-# getRavenToken("Qiy5som!DooGidl5","td471")
