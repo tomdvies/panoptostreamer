@@ -1,6 +1,5 @@
 import requests
 from datetime import datetime
-import time
 
 # This code is awful, but does generate the desired tokens.
 
@@ -13,6 +12,7 @@ def getRavenToken(user, passwd):
            "instance=CambridgeUniversityUISMoodleLIVE&AllowBounce=true"
     re1 = session.get(link)
     session.cookies.set("Ucam-WebAuth-Session-S", "Not-authenticated", domain="www.vle.cam.ac.uk/")
+    # this step not needed, my format is wrong anyway but idc
     date = datetime.today().strftime('%Y%m%d%T%H%M%SZ')
     content={
         "date":date,
@@ -26,7 +26,7 @@ def getRavenToken(user, passwd):
         "ver":"3"
     }
     re2 = session.post("https://raven.cam.ac.uk/auth/authenticate2.html",data=content,cookies={"Ucam-WebAuth-Session-S":"Not-authenticated"})
-    # This step below seems like it should do nothing but removing it breaks everything
+    # This step below seems like it should do nothing as the session should already have the cookies but removing it breaks everything
     session.cookies.update(re2.history[1].cookies)
     re3 = session.get("https://www.vle.cam.ac.uk/auth/raven/login.php")
     for cookie in session.cookies:

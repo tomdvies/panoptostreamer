@@ -1,17 +1,9 @@
 import os
-
 from moviepy.video.VideoClip import ColorClip
-from moviepy.video.fx.crop import crop
-
-import auth
-import requests
-from http.cookiejar import MozillaCookieJar
-from pathlib import Path
-import re
-import ffmpeg
+import ravenauth
 import shutil
 import m3u8fetch
-from moviepy.editor import VideoFileClip, clips_array, vfx
+from moviepy.editor import VideoFileClip, clips_array
 
 
 try:
@@ -47,11 +39,6 @@ def getInfoJson(id, session):
     }
     return session.post("https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer/DeliveryInfo.aspx",
                   data=content).json()
-
-# def compositvideo(outname):
-#     audio = ffmpeg.input('tmp/audio_stream.aac')
-#     videos = [ffmpeg.input(file) for file in os.listdir("tmp") if file != "audio_stream.mp3"]
-#     if len(videos) == 1:
 
 def save_stream2(link, user, password,name):
     print("downloading:",link)
