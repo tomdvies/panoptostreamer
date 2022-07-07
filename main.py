@@ -43,7 +43,7 @@ def getInfoJson(id, session):
 def save_stream2(link, user, password,name):
     print("downloading:",link)
     page_id = link.split("id=")[-1]
-    session = auth.getRavenToken(user,password)
+    session = ravenauth.getRavenToken(user,password)
     infojson = getInfoJson(page_id, session)
     out_str = f"output/{name}.mp4"
     # print(infojson)
