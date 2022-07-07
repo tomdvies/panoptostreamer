@@ -77,7 +77,7 @@ def save_stream2(link, user, password,name):
         final_clip.write_videofile(out_str, threads = 8, fps=24)
     else:
         blank = ColorClip((10,10), (0,0,0), duration=videos[0].duration)
-        final_clip = clips_array([[videos[0].resize(0.6),blank],
+        final_clip = clips_array([[videos[0].resize(0.7),blank],
                                   [videos[1], videos[2].resize(width=videos[1].w)]])
                                   # [videos[1], crop(videos[2],x1=60,x2=videos[2].size[0]-60,y1=30,y2=videos[2].size[1]-30).resize(videos[1].size)]]) # hack for messed up grm camera
         final_clip.subclip(0, 5).write_videofile(out_str, threads = 32, fps=24)
@@ -116,5 +116,5 @@ link_arr = [
     "https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=4828b0ed-8c1a-4e61-be21-aea000a7b325"
 ]
 for x in range(len(link_arr)):
-    save_stream2(link_arr[x],user,pwd, f"VP_Lecture_{x+1}")
+    save_stream2(link_arr[x],user,pwd, f"Optimisation_{x+1}")
 
