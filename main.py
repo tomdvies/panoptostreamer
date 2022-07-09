@@ -62,16 +62,25 @@ def save_stream2(link, user, password,name):
     clip_arrs = []
     if len(videos) == 1:
         shutil.copy2('tmp/out0.mp4', out_str)
-    elif len(videos) == 2:
-        final_clip = clips_array([[videos[0].resize(0.6),videos[1]]]).resize(width=1980)
-        final_clip.write_videofile(out_str, threads = 8, fps=24)
     else:
-        blank = ColorClip((10,10), (0,0,0), duration=videos[0].duration)
-        final_clip = clips_array([[videos[0].resize(0.7),blank],
-                                  [videos[1], videos[2].resize(width=videos[1].w)]])
-                                  # [videos[1], crop(videos[2],x1=60,x2=videos[2].size[0]-60,y1=30,y2=videos[2].size[1]-30).resize(videos[1].size)]]) # hack for messed up grm camera
+        if len(videos) == 2:
+            final_clip = clips_array([[videos[0].resize(0.6),videos[1]]]).resize(width=1980)
+        else:
+            blank = ColorClip((10,10), (0,0,0), duration=videos[0].duration)
+            final_clip = clips_array([[videos[0].resize(0.7),blank],
+                                      [videos[1], videos[2].resize(width=videos[1].w)]])
+                                      # [videos[1], crop(videos[2],x1=60,x2=videos[2].size[0]-60,y1=30,y2=videos[2].size[1]-30).resize(videos[1].size)]]) # hack for messed up grm camera
+        if final_clip.w % 2 == 1:
+            final_clip = final_clip.margin(right=1)
+        if final_clip.h % 2 == 1:
+            final_clip = final_clip.margin(top=1)
         final_clip.write_videofile(out_str, threads = 32, fps=24)
-    print("written file,",f'output/{name}.mp4')
+                                   # threads=5,
+                                   # bitrate="2000k",
+                                   # audio_codec="aac",
+                                   # codec="h264_videotoolbox")
+
+    print("written file,",out_str)
 
 
 with open("info.txt","r") as f:
