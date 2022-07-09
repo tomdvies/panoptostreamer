@@ -105,6 +105,6 @@ link_arr = [
     "https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=78e34c87-a785-49ea-958c-ae600101354f",
     "https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=4828b0ed-8c1a-4e61-be21-aea000a7b325"
 ]
-for x in range(8,len(link_arr)):
+for x in range(7,len(link_arr)):
     save_stream2(link_arr[x],user,pwd, f"Optimisation_{x+1}")
 
