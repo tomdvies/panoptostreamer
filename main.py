@@ -41,7 +41,8 @@ def getInfoJson(id, session):
                   data=content).json()
 
 def save_stream2(link, user, password,name):
-    print("downloading:",link)
+    print("input:",link)
+    print("output:",name+".mp4")
     page_id = link.split("id=")[-1]
     session = ravenauth.getRavenToken(user,password)
     infojson = getInfoJson(page_id, session)
@@ -50,11 +51,13 @@ def save_stream2(link, user, password,name):
     # name = infojson["Delivery"]["SessionGroupLongName"].replace(" ", "_")
     mu3links = []
     for streams in infojson["Delivery"]["Streams"]:
-        mu3links += [streams["StreamUrl"]]  # first one is person lecturing, second lhs and third rhs
+        mu3links += [streams["StreamUrl"]]  # first one is person lecturing, second lhs and third rhs for most lectures
     print(f"{len(mu3links)} files to download,")
     for i in range(len(mu3links)):
         print(f"downloading file {i+1}...")
         m3u8fetch.download_m3u8(mu3links[i],f"tmp/out{i}.mp4")
+    # moviepy/ffmpeg can be painfully slow, but it does work.
+    # a better solution would be much appreciated
     videos = [VideoFileClip(f"tmp/out{i}.mp4") for i in range(len(mu3links))]
     clip_arrs = []
     if len(videos) == 1:
@@ -102,6 +105,6 @@ link_arr = [
     "https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=78e34c87-a785-49ea-958c-ae600101354f",
     "https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=4828b0ed-8c1a-4e61-be21-aea000a7b325"
 ]
-for x in range(len(link_arr)):
+for x in range(8,len(link_arr)):
     save_stream2(link_arr[x],user,pwd, f"Optimisation_{x+1}")
 
