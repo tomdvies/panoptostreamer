@@ -88,7 +88,7 @@ with open("info.txt","r") as f:
     file2 = f.read()
     user,pwd = file2.split("\n")[0:2]
 
-save_stream2("https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=40612c98-0bd2-4d1d-9b70-ae600101152d",user,pwd,"test")
+
 # link_arr = [
 #     "https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=c97a71cf-fc63-4259-9460-ae6001012599",
 #     "https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=6ec7bb50-2b37-4863-9d3d-ae6001012eb1",
