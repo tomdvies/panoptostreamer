@@ -63,7 +63,7 @@ def save_stream2(link, user, password,name):
     if len(videos) == 1:
         shutil.copy2('tmp/out0.mp4', out_str)
     else:
-        if len(videos) == 2:
+        if len(videos) == 3:
             final_clip = clips_array([[videos[0].resize(0.6),videos[1]]])
         else:
             blank = ColorClip((10,10), (0,0,0), duration=videos[0].duration)
@@ -116,7 +116,8 @@ with open("info.txt","r") as f:
 #             "https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=6768feca-cd7d-474a-b9d4-ae6001011c1b&instance=CambridgeUniversityUISMoodleLIVE",
 #             "https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=ebbcaccf-592d-4924-beb3-aea000dd0ccd&instance=CambridgeUniversityUISMoodleLIVE"
 # ]
-save_stream2("https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=ebbcaccf-592d-4924-beb3-aea000dd0ccd",user,pwd,"VP_12")
+# save_stream2("https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=ebbcaccf-592d-4924-beb3-aea000dd0ccd",user,pwd,"VP_12")
+save_stream2("https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=40612c98-0bd2-4d1d-9b70-ae600101152d",user,pwd,"VP_2")
 # for x in range(len(link_arr)):
 #     save_stream2(link_arr[x],user,pwd, f"VP_{x+1}")
 
