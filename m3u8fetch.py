@@ -11,7 +11,7 @@ def fetch_clip_to_tmp(url):
     r = requests.get(url, allow_redirects=True)
     filename = url.split("/")[-1]
     open(f"tmp/{filename}", 'wb').write(r.content)  # assumes nothing's name in server has a collision locally
-    print(filename)
+    print(f"fetched {filename}")
     return f"tmp/{filename}"
 
 
@@ -36,7 +36,6 @@ def download_m3u8(url, outfile):
         for task in as_completed(processes):
             fclips.append(task.result())
         fclips.sort(key=lambda f: int(''.join(filter(str.isdigit, f))))
-        print(fclips)
         # for clip in playlist.segments:
         #     fclips.append(f"tmp/{filename}")
         print(f"concatenating {len(playlist.segments)} clips")
