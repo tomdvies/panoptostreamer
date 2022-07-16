@@ -19,7 +19,8 @@ def download_m3u8(url, outfile):
     playlistroot = m3u8.load(uri=url)
     urls = [play.absolute_uri for play in playlistroot.playlists]
     playlist = m3u8.load(urls[0])
-    if len(playlist.segments) == 1:
+    print(playlist.segments)
+    if not playlist.segments[0].absolute_uri.endswith(".ts"):
         with open(outfile,"wb") as f:
             print("url:",playlist.segments[0].absolute_uri)
             r = requests.get(playlist.segments[0].absolute_uri)
