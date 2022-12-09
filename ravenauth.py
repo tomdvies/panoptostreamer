@@ -1,9 +1,8 @@
 import requests
-from datetime import datetime
 
 # this code is awful, but does generate the desired tokens
 
-def getRavenToken(user, passwd):
+def get_raven_token(user, passwd):
     print("Fetching panopto tokens...")
     session = requests.Session()
     link = "https://cambridgelectures.cloud.panopto.eu/Panopto/" +\
@@ -12,10 +11,8 @@ def getRavenToken(user, passwd):
            "instance=CambridgeUniversityUISMoodleLIVE&AllowBounce=true"
     re1 = session.get(link)
     session.cookies.set("Ucam-WebAuth-Session-S", "Not-authenticated", domain="www.vle.cam.ac.uk/")
-    # this step not needed, my format is wrong anyway but idc
-    date = datetime.today().strftime('%Y%m%d%T%H%M%SZ')
     content={
-        "date":date,
+        "date":"date",
         "iact":"yes",
         "msg":"your session on the site has expired",
         "pwd":passwd,
@@ -35,3 +32,9 @@ def getRavenToken(user, passwd):
         if cookie.name=="csrfToken":
             print("csrf:",cookie.value)
     return session
+
+if __name__ == "__main__":
+    with open("info.txt","r") as f:
+        file2 = f.read()
+        user,pwd = file2.split("\n")[0:2]
+    get_raven_token(user,pwd)

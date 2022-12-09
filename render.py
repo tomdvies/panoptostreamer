@@ -16,16 +16,8 @@ try:
 except:
     pass
 
-def parseCookieFile(cookiefile): # horrible fn dont use
-    cookies = {}
-    with open (cookiefile, 'r') as fp:
-        for line in fp:
-            if not line.startswith("#") and line.strip()!="":
-                lineFields = line.strip().split('\t')
-                cookies[lineFields[5]] = lineFields[6]
-    return cookies
 
-def getInfoJson(id, session):
+def get_info_json(id, session):
     content = {
         "deliveryId": id,
         "invocationId": "",
@@ -40,12 +32,12 @@ def getInfoJson(id, session):
     return session.post("https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer/DeliveryInfo.aspx",
                   data=content).json()
 
-def save_stream2(link, user, password,name):
+def save_stream(link, user, password, name, session=None): 
     print("input:",link)
     print("output:",name+".mp4")
     page_id = link.split("&")[0].split("id=")[-1]
-    session = ravenauth.getRavenToken(user,password)
-    infojson = getInfoJson(page_id, session)
+    session = ravenauth.get_raven_token(user, password)
+    infojson = get_info_json(page_id, session)
     out_str = f"output/{name}.mp4"
     # print(infojson)
     # name = infojson["Delivery"]["SessionGroupLongName"].replace(" ", "_")
