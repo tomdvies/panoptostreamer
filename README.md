@@ -1,5 +1,6 @@
 # panoptostreamer
-Stream cambridge university panopto links into an mp4 file.
-Call `save_stream2` with your link, username, password and file name to fetch the file.
-The code is messy, slow and badly structured, lines 86-89 in render.py are not required and are for my own testing.
-Use of this code is probably prohibited by some TOS, obviously don't distribute mp4s generated with this tool, it is intended to be educational and an exercise in RE.
+This tool lets you stream cambridge university panopto links into an mp4 file.
+
+Login to your university microsoft account and then go to http://login.microsoft.online, and use an extension such as [cookies.txt](https://addons.mozilla.org/en-GB/firefox/addon/cookies-txt/) to dump your cookies for that site to a text file. 
+
+Then name it mscookies.txt and place it in the directory you are running the tool.

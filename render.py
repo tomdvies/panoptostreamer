@@ -1,6 +1,6 @@
 import os
 from moviepy.video.VideoClip import ColorClip
-import ravenauth
+import panoptoauth
 import shutil
 import m3u8fetch
 from moviepy.editor import VideoFileClip, clips_array
@@ -36,7 +36,8 @@ def save_stream(link, user, password, name, session=None):
     print("input:",link)
     print("output:",name+".mp4")
     page_id = link.split("&")[0].split("id=")[-1]
-    session = ravenauth.get_raven_token(user, password)
+    # need to have dumped cookies file at ./mscookies.txt
+    session = panoptoauth.get_panopto_token()
     infojson = get_info_json(page_id, session)
     out_str = f"output/{name}.mp4"
     # print(infojson)

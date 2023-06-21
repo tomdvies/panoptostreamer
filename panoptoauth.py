@@ -43,4 +43,4 @@ def get_panopto_token():
     return session
 
 if __name__ == "__main__":
-    get_raven_token()
+    get_panopto_token()
