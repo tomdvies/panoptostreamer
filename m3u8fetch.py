@@ -17,8 +17,11 @@ def fetch_clip_to_tmp(url):
 
 def download_m3u8(url, outfile):
     playlistroot = m3u8.load(uri=url)
+    # print(playlistroot.playlists)
     urls = [play.absolute_uri for play in playlistroot.playlists]
-    playlist = m3u8.load(urls[0])
+    playlist = m3u8.load(([play.absolute_uri for play in playlistroot.playlists if play.stream_info.resolution[0]==1352] + [playlistroot.playlists[0].absolute_uri])[0])
+    # print([play.stream_info.resolution[0] for play in playlistroot.playlists])
+    # print(playlist.stream_info.resolution[0])
     if not playlist.segments[0].absolute_uri.endswith(".ts"):
         with open(outfile,"wb") as f:
             print("url:",playlist.segments[0].absolute_uri)
