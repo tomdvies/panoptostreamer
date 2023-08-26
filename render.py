@@ -32,7 +32,7 @@ def get_info_json(id, session):
     return session.post("https://cambridgelectures.cloud.panopto.eu/Panopto/Pages/Viewer/DeliveryInfo.aspx",
                   data=content).json()
 
-def save_stream(link, user, password, name, session=None): 
+def save_stream(link, name):
     print("input:",link)
     print("output:",name+".mp4")
     page_id = link.split("&")[0].split("id=")[-1]
@@ -58,11 +58,14 @@ def save_stream(link, user, password, name, session=None):
     else:
         if len(videos) == 2:
             final_clip = clips_array([[videos[0].resize(0.6),videos[1]]])
-        else:
+        elif len(videos) == 3:
             blank = ColorClip((10,10), (0,0,0), duration=videos[0].duration)
             final_clip = clips_array([[videos[0].resize(0.7),blank],
                                       [videos[1], videos[2].resize(width=videos[1].w)]])
                                       # [videos[1], crop(videos[2],x1=60,x2=videos[2].size[0]-60,y1=30,y2=videos[2].size[1]-30).resize(videos[1].size)]]) # hack for messed up grm camera
+        else:
+            final_clip = clips_array([[videos[0].resize(width=videos[1].w),videos[1]],
+                                      [videos[2].resize(width=videos[1].w), videos[3].resize(width=videos[1].w)]])
         # need even dimensions for standard encodings
         if final_clip.w % 2 == 1:
             final_clip = final_clip.margin(right=1)
