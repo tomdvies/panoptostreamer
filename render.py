@@ -39,7 +39,7 @@ def save_stream(link, name):
     # need to have dumped cookies file at ./mscookies.txt
     session = panoptoauth.get_panopto_token()
     infojson = get_info_json(page_id, session)
-    out_str = f"output/{name}-1.mp4"
+    out_str = f"output/{name}.mp4"
     # print(infojson)
     # name = infojson["Delivery"]["SessionGroupLongName"].replace(" ", "_")
     mu3links = []
@@ -71,7 +71,6 @@ def save_stream(link, name):
             final_clip = final_clip.margin(right=1)
         if final_clip.h % 2 == 1:
             final_clip = final_clip.margin(top=1)
-        final_clip = final_clip.subclip(10,15)
         final_clip.write_videofile(out_str, threads = 32, fps=24)
                                    # threads=5,
                                    # bitrate="2000k",
