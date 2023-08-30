@@ -72,6 +72,9 @@ for course in folders:
         if course["Name"] == "II Numerical Analysis MT22" and j < 18:
             i=19
             continue
+        if course["Name"] == "II Galois Theory MT22" and j < 1:
+            i=2
+            continue
         session = panoptoauth.get_panopto_token()
         try:
             link = video["ViewerUrl"]
