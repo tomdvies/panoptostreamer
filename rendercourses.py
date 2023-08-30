@@ -36,7 +36,7 @@ remove = ["C0_20_II: II Linear Analysis","HPS Part II Paper 4: HPS Part II Paper
 # want "Id" tag
 # print("\n".join([f"{f['Name']} {f['Id']}" for f in folders]))
 # want = ["II Applications of Quantum Mechanics LT23", "II Principles of Quantum Mechanics MT22","II Mathematics of Machine Learning LT23","II General Relativity LT23", "II Quantum Information and Computation LT23"]
-want = ["II Linear Analysis MT22", "II Numerical Analysis MT22"]
+want = ["II Numerical Analysis MT22", "II Galois Theory MT22", "II Representation Theory MT22"]
 # folders = [fl for fl in folders if "II" in (fl["Name"] or "III" in fl["Name"] )and fl["Name"] not in remove]# and fl["Name"] in want]
 folders = [fl for fl in folders if "II" in (fl["Name"] or "III" in fl["Name"] ) and fl["Name"] in want]
 print("\n".join([f"{f['Name']} {f['Id']}" for f in folders]))
@@ -68,7 +68,10 @@ for course in folders:
     folderreq = session.post("https://cambridgelectures.cloud.panopto.eu/Panopto/Services/Data.svc/GetSessions",json=fjson).json()
     # video1 = folderreq["d"]["Results"][0]
     print(f"{len(folderreq['d']['Results'])} lectures to fetch")
-    for video in folderreq["d"]["Results"]:
+    for j, video in enumerate(folderreq["d"]["Results"]):
+        if course["Name"] == "II Numerical Analysis MT22" and j < 18:
+            i=19
+            continue
         session = panoptoauth.get_panopto_token()
         try:
             link = video["ViewerUrl"]
